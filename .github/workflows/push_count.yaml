@@ -8,7 +8,7 @@ jobs:
       issues: write
     steps:
       - name: Add comment
-        run: gh issue edit "$NUMBER" 2077227053 --body "$BODY"
+        run: gh issue comment 2077227053 --body "$BODY"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
