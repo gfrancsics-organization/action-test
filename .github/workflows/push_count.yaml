@@ -8,7 +8,7 @@ jobs:
       issues: write
     steps:
       - name: Add comment
-        run: gh issue comment 1 --edit-last --budy "$BODY"
+        run: gh issue comment 1 --edit-last --body "$BODY"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
