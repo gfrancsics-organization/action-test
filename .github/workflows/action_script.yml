@@ -1,16 +1,41 @@
-name: Pull Request Comment
+name: Increment Issue Count
 on: [push]
+
 jobs:
-  pr-comment:
+  increment_count:
     runs-on: ubuntu-latest
     steps:
-      - name: Comment on New PRs
-        uses: actions/github-script@v6 ## emiatt lehet majd pár js kódot írni
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Increment count
+        uses: actions/github-script@v5
         with:
           script: |
-            github.rest.issues.createComment({
+            // Specify the issue number
+            const issueNumber = 1; // replace with your issue number
+
+            // Get comments for the issue
+            const comments = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: 'Thanks for contributing!',
+              issue_number: issueNumber
             });
+
+            // Loop through each comment
+            for (const comment of comments.data) {
+              // Check if comment starts with "Count: "
+              if (comment.body.startsWith('Count: ')) {
+                // Get the count value and increment it
+                const count = parseInt(comment.body.split(' ')[1]) + 1;
+
+                // Update the comment with the incremented count
+                await github.rest.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: comment.id,
+                  body: `Count: ${count}`
+                });
+              }
+            }
+          github-token: ${{ secrets.GITHUB_TOKEN }}
