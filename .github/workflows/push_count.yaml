@@ -1,5 +1,4 @@
 name: Add comment
-
 on: [push]
 
 jobs:
@@ -9,12 +8,10 @@ jobs:
       issues: write
     steps:
       - name: Add comment
-        run: gh issue comment "$NUMBER" --body "$BODY"
+        run: gh issue edit "$NUMBER" 2077227053 --body "$BODY"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
           NUMBER: 1
           BODY: >
-            This issue is available for anyone to work on.
-            **Make sure to reference this issue in your pull request.**
-            :sparkles: Thank you for your contribution! :sparkles:
+            asasasas
