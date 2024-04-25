@@ -1,11 +1,9 @@
 name: Add comment
-on:
-  issues:
-    types:
-      - labeled
+
+on: [push]
+
 jobs:
   add-comment:
-    if: github.event.label.name == 'help wanted'
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -15,7 +13,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
-          NUMBER: ${{ github.event.issue.number }}
+          NUMBER: 1
           BODY: >
             This issue is available for anyone to work on.
             **Make sure to reference this issue in your pull request.**
